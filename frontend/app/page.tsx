@@ -1,14 +1,14 @@
-import { getStrapiData } from '@/lib/strapi'
+import { HeroSection } from '@/components/hero-section'
+import { getHomePage } from '@/lib/strapi'
 
 export default async function Home() {
-  const data = await getStrapiData('/api/home-page')
+  const data = await getHomePage()
 
-  const { title, description } = data?.data
+  const [heroSection] = data?.sections || []
 
   return (
     <main className="container mx-auto py-6">
-      <h1 className="text-3xl font-bold">{title}</h1>
-      <p className="text-gray-600">{description}</p>
+      <HeroSection data={heroSection} />
     </main>
   )
 }
