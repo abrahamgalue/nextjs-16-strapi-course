@@ -1,4 +1,5 @@
 import qs from 'qs'
+import { cacheLife } from 'next/cache'
 
 export const STRAPI_BASE_URL =
   process.env.STRAPI_BASE_URL || 'http://localhost:1337'
@@ -23,6 +24,10 @@ const QUERY_HOME_PAGE = {
 }
 
 export async function getHomePage() {
+  'use cache'
+
+  cacheLife('minutes')
+
   const query = qs.stringify(QUERY_HOME_PAGE)
   const response = await getStrapiData(`/api/home-page?${query}`)
   return response?.data
